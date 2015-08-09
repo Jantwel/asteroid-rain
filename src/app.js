@@ -11,9 +11,11 @@ var scrollSpeed = {
 };
 var ship;
 var gameGravity = -0.05;
-var gameThrust = 0.2;
+var gameThrust = 0.125;
 var asteroidPeriod = 0.6;
 var emitter;
+var score = 0;
+var scoreText;
 
 function restartGame() {
     ship.ySpeed = 0;
@@ -53,6 +55,10 @@ var HelloWorldLayer = cc.Layer.extend({
         background.depthPlaneFront = new ScrollingBG(res.depthPlane3_png);
         this.addChild(background.depthPlaneFront);
 
+        scoreText = cc.LabelTTF.create("Score: 0", "Arial", "32", cc.TEXT_ALIGNMENT_CENTER);
+        this.addChild(scoreText);
+        scoreText.setPosition(650, 50);
+
         ship = new Ship();
         this.addChild(ship);
 
@@ -70,6 +76,8 @@ var HelloWorldLayer = cc.Layer.extend({
         background.depthPlaneBackward.scroll(scrollSpeed.backward);
         background.depthPlaneMiddle.scroll(scrollSpeed.middle);
         background.depthPlaneFront.scroll(scrollSpeed.front);
+        score++;
+        scoreText.setString("Score: " + score);
 
         ship.updateY();
     },
